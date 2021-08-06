@@ -1,0 +1,147 @@
+CREATE DATABASE social_media_platform;
+
+CREATE TABLE users
+(
+    id       SERIAL PRIMARY KEY,
+    username VARCHAR(50)
+);
+
+INSERT INTO users (username)
+VALUES ('monahan93'),
+       ('pferrer'),
+       ('si93onis'),
+       ('99stroman');
+
+SELECT *
+FROM users;
+
+-- V1. Creating table
+
+CREATE TABLE photos
+(
+    id      SERIAL PRIMARY KEY,
+    url     VARCHAR(200),
+    user_id INTEGER REFERENCES users (id)
+);
+
+---------------------------------------
+
+-- V2. Creating table
+
+CREATE TABLE photos
+(
+    id      SERIAL PRIMARY KEY,
+    url     VARCHAR(200),
+    user_id INTEGER,
+    FOREIGN KEY (user_id) REFERENCES users (id)
+);
+
+---------------------------------------------
+
+SELECT table_name, column_name, data_type
+FROM information_schema.columns
+WHERE table_name = 'photos';
+
+INSERT INTO photos (url, user_id)
+VALUES ('http://one.jpg', 4);
+
+
+-- 13. Running queries on associated data
+
+INSERT INTO photos (url, user_id)
+VALUES ('http://two.jpg', 1),
+       ('http://25.jpg', 1),
+       ('http://36.jpg', 1),
+       ('http://754.jpg', 2),
+       ('http://35.jpg', 3),
+       ('http://256.jpg', 4);
+
+SELECT *
+FROM photos;
+
+DROP TABLE photos;
+
+CREATE TABLE photos
+(
+    id      SERIAL PRIMARY KEY,
+    url     VARCHAR(200),
+    user_id INTEGER,
+    FOREIGN KEY (user_id) REFERENCES users (id)
+);
+
+SELECT * FROM photos WHERE user_id = 4;
+
+SELECT url, username FROM photos p
+JOIN users u on u.id = p.user_id;
+
+
+-- 3. Working with tables -- 20. Testing Deletion Constraints
+
+DROP TABLE photos;
+
+SELECT * FROM photos;
+
+CREATE TABLE photos (
+    id SERIAL PRIMARY KEY,
+    url VARCHAR(200),
+    user_id INT REFERENCES users(id) ON DELETE SET NULL
+);
+
+INSERT INTO photos (url, user_id)
+VALUES
+('http:/one.jpg', 4),
+('http:/754.jpg', 2),
+('http:/35.jpg', 3),
+('http:/256.jpg', 4);
+
+DELETE FROM users WHERE id = 4;
+
+-- Users Table
+SELECT * FROM users;
+
+
+-- 3. Working with tables -- 23. Adding Some Complexity
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SELECT *
+FROM information_schema.columns
+ORDER BY table_name DESC;
+
+SELECT table_name,
+       column_name,
+       data_type
+FROM information_schema.columns
+WHERE table_name = 'users';
+
+SELECT *
+FROM pg_catalog.pg_constraint
+LIMIT 1;
+
+
