@@ -1,7 +1,7 @@
 -- 1.
 SELECT * FROM products ORDER BY price;
 
--- SELECT price, count(*) no_prices FROM products GROUP BY price ORDER BY no_prices desc;
+SELECT price, count(*) no_prices FROM products GROUP BY price ORDER BY no_prices desc;
 
 -- SELECT * FROM products where price = 619;
 
